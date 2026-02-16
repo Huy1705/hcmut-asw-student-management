@@ -1,26 +1,25 @@
-package vn.edu.hcmut.cse.adsoftweng.lab.controller;
-
+package vn.edu.hcmut.cse.adse.lab.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller; // Luu y: su dung @Controller, KHONG dung
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+
+import vn.edu.hcmut.cse.adse.lab.entity.Student;
+import vn.edu.hcmut.cse.adse.lab.service.StudentService;
+
 import java.util.List;
-
-import vn.edu.hcmut.cse.adsoftweng.lab.entity.Student;
-import org.springframework.ui.Model;
-import vn.edu.hcmut.cse.adsoftweng.lab.service.StudentService;
-
-@RestController
-@RequestMapping("/api/students")
-public class StudentController {
-    @Autowired
-    private StudentService service;
-
-    @GetMapping
+@Controller
+@RequestMapping("/students")
+public class StudentWebController {
+@Autowired
+private StudentService service;
+// Route: GET http://localhost:8080/students
+@GetMapping
     public String getAllStudents(@RequestParam(required = false) String keyword, Model model) {
         List<Student> students;
+        System.out.println("Keyword nhan duoc: " + keyword);
         if (keyword != null && !keyword.isEmpty()) {
             // Can viet them ham searchByName trong Service/Repository
             students = service.searchByName(keyword);
@@ -29,10 +28,5 @@ public class StudentController {
         }
         model.addAttribute("dsSinhVien", students);
         return "students";
-    }
-
-    @GetMapping("/{id}")
-    public Student getStudentById(@PathVariable String id) {
-        return service.getById(id);
     }
 }

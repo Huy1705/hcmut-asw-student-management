@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"> <!-- Khai bao namespace de dung th:* -->
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Danh Sach Sinh Vien</title>
-    <!-- CSS don gian -->
+    <title>Danh Sách Sinh Viên</title>
     <style>
         body {
             font-family: sans-serif;
@@ -17,8 +16,7 @@
             margin-top: 20px;
         }
 
-        th,
-        td {
+        th, td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -27,37 +25,45 @@
         th {
             background-color: #f2f2f2;
         }
+
+        /* Yêu cầu 7.2: Style cho sinh viên chưa đủ 18 tuổi */
+        .under-18 {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Danh Sach Sinh Vien (SSR)</h1>
+    <h1>Danh Sách Sinh Viên (SSR)</h1>
+
+    <div style="margin-bottom: 20px;">
+        <form th:action="@{/students}" method="get">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Nhập tên sinh viên..." />
+            <button type="submit">Tìm kiếm</button>
+            <a th:href="@{/students}"><button type="button">Tất cả</button></a>
+        </form>
+    </div>
+
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Ho va Ten</th>
+                <th>Họ và Tên</th>
                 <th>Email</th>
-                <th>Tuoi</th>
+                <th>Tuổi</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Cu phap Thymeleaf: Duyet qua danh sach "dsSinhVien" -->
-            <!-- th:each="bien_tam : ${key_trong_model}" -->
-            <tr th:each="student : ${dsSinhVien}">
-                <td th:text="${student.id}">ID Mau</td>
-                <td th:text="${student.name}">Ten Mau</td>
-                <td th:text="${student.email}">Email Mau</td>
+            <tr th:each="student : ${dsSinhVien}" 
+                th:classappend="${student.age < 18} ? 'under-18' : ''">
+                
+                <td th:text="${student.id}">ID Mẫu</td>
+                <td th:text="${student.name}">Tên Mẫu</td>
+                <td th:text="${student.email}">Email Mẫu</td>
                 <td th:text="${student.age}">0</td>
             </tr>
         </tbody>
     </table>
-    <form action="/students" method="GET">
-<input type="text" name="keyword" placeholder="Nhap ten..." />
-<button type="submit">Tim</button>
-</form>
-
 </body>
-
-
 </html>

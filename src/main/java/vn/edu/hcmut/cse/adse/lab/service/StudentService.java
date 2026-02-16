@@ -1,10 +1,12 @@
-package vn.edu.hcmut.cse.adsoftweng.lab.service;
+package vn.edu.hcmut.cse.adse.lab.service;
 
 import org.springframework.stereotype.Service;
+
+import vn.edu.hcmut.cse.adse.lab.entity.Student;
+import vn.edu.hcmut.cse.adse.lab.repository.StudentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-import vn.edu.hcmut.cse.adsoftweng.lab.repository.StudentRepository;
-import vn.edu.hcmut.cse.adsoftweng.lab.entity.Student;
 
 @Service
 public class StudentService {
@@ -19,7 +21,7 @@ public class StudentService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<Student> searchByName(String name) {
-        return repository.findByNameContainingIgnoreCase(name);
-    }
+    public List<Student> searchByName(String keyword) {
+    return repository.findByNameContainingIgnoreCase(keyword);
+}
 }
