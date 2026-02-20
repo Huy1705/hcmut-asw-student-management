@@ -26,10 +26,27 @@
             background-color: #f2f2f2;
         }
 
-        /* Yêu cầu 7.2: Style cho sinh viên chưa đủ 18 tuổi */
+        /* Style cho sinh viên chưa đủ 18 tuổi */
         .under-18 {
             color: red;
             font-weight: bold;
+        }
+
+        /* Nút cơ bản */
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Style riêng cho nút Thêm Mới để dễ nhận diện */
+        .btn-add {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 20px;
         }
     </style>
 </head>
@@ -37,12 +54,14 @@
 <body>
     <h1>Danh Sách Sinh Viên (SSR)</h1>
 
-    <div style="margin-bottom: 20px;">
-        <form th:action="@{/students}" method="get">
+    <div style="margin-bottom: 20px; display: flex; align-items: center;">
+        <form th:action="@{/students}" method="get" style="margin: 0;">
             <input type="text" name="keyword" th:value="${keyword}" placeholder="Nhập tên sinh viên..." />
             <button type="submit">Tìm kiếm</button>
             <a th:href="@{/students}"><button type="button">Tất cả</button></a>
         </form>
+        
+        <a th:href="@{/students/new}" class="btn-add">Thêm Mới</a>
     </div>
 
     <table>
@@ -52,6 +71,7 @@
                 <th>Họ và Tên</th>
                 <th>Email</th>
                 <th>Tuổi</th>
+                <th>Thao Tác</th>
             </tr>
         </thead>
         <tbody>
@@ -62,6 +82,12 @@
                 <td th:text="${student.name}">Tên Mẫu</td>
                 <td th:text="${student.email}">Email Mẫu</td>
                 <td th:text="${student.age}">0</td>
+                
+                <td>
+                    <a th:href="@{/students/{id}(id=${student.id})}">
+                        <button type="button">Xem Chi Tiết</button>
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>
