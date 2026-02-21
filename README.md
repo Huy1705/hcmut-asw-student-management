@@ -94,12 +94,10 @@ Nếu `spring.jpa.hibernate.ddl-auto` đang đặt là `create`, Hibernate sẽ 
 
 ## 📸 Screenshots (Kết quả Lab 4 & 5)
 
-Chèn ảnh minh họa vào thư mục `docs/screenshots/` rồi thêm markdown sau để hiển thị:
-
 ```markdown
-![Students list](docs/screenshots/students.png)
-![Student detail](docs/screenshots/student-detail.png)
-![Student form](docs/screenshots/student-form.png)
+![Students list](./docs/screenshots/students.png)
+![Student detail](./docs/screenshots/student-detail.png)
+![Student form](./docs/screenshots/student-form.png)
 ```
 
 
