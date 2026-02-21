@@ -2,25 +2,274 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Chi tiết Sinh Viên</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f1e3c;
+            --navy-light: #1a2f5a;
+            --accent: #e8a020;
+            --text: #1a1a2e;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --surface: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f4f6fb;
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--navy);
+            padding: 28px 48px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 24px rgba(15,30,60,0.18);
+        }
+
+        .header-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.6rem;
+        }
+
+        .header-sub {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.78rem;
+            font-weight: 300;
+            margin-top: 2px;
+        }
+
+        .main {
+            max-width: 640px;
+            margin: 48px auto;
+            padding: 0 24px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .breadcrumb {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        .breadcrumb a {
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* Avatar card */
+        .profile-card {
+            background: var(--surface);
+            border-radius: 24px;
+            box-shadow: 0 4px 32px rgba(15,30,60,0.09);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 36px 32px 28px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .avatar {
+            width: 72px;
+            height: 72px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+            font-family: 'Playfair Display', serif;
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(232,160,32,0.35);
+        }
+
+        .profile-name {
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            line-height: 1.2;
+        }
+
+        .profile-id-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.78rem;
+            padding: 3px 12px;
+            border-radius: 20px;
+            margin-top: 6px;
+            letter-spacing: 0.06em;
+        }
+
+        /* Info rows */
+        .info-body {
+            padding: 32px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f3f6;
+        }
+
+        .info-row:last-child { border-bottom: none; }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: #f4f6fb;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 10px;
+            padding: 24px 32px;
+            border-top: 1px solid #f1f3f6;
+            background: #fafbfc;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: all 0.18s;
+        }
+
+        .btn-back {
+            background: #f3f4f6;
+            color: var(--muted);
+            border: 1.5px solid var(--border);
+        }
+        .btn-back:hover { background: #e5e7eb; color: var(--text); }
+
+        .btn-edit {
+            background: var(--accent);
+            color: var(--navy);
+            font-weight: 600;
+            box-shadow: 0 2px 12px rgba(232,160,32,0.25);
+        }
+        .btn-edit:hover { background: #d4911a; transform: translateY(-1px); }
+
+        .btn-delete {
+            background: #fff;
+            color: #dc2626;
+            border: 1.5px solid #fecaca;
+            margin-left: auto;
+        }
+        .btn-delete:hover { background: #fef2f2; border-color: #dc2626; }
+    </style>
 </head>
-<body class="container mt-4">
-    <h2>Thông tin chi tiết Sinh Viên</h2>
-    
-    <div class="card mt-3" style="width: 25rem;">
-        <div class="card-body">
-            <h5 class="card-title" th:text="${student.name}">Tên sinh viên</h5>
-            <p class="card-text"><strong>ID:</strong> <span th:text="${student.id}"></span></p>
-            <p class="card-text"><strong>Email:</strong> <span th:text="${student.email}"></span></p>
-            <p class="card-text"><strong>Tuổi:</strong> <span th:text="${student.age}"></span></p>
+<body>
+    <div class="header">
+        <div class="header-icon">🎓</div>
+        <div>
+            <h1>Quản Lý Sinh Viên</h1>
+            <div class="header-sub">Student Management System</div>
         </div>
     </div>
 
-    <div class="mt-3">
-        <a th:href="@{/students}" class="btn btn-secondary">Quay lại</a>
-        <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-warning">Chỉnh Sửa</a>
-        <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn btn-danger" 
-           onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này không?');">Xóa</a>
+    <div class="main">
+        <div class="breadcrumb">
+            <a th:href="@{/students}">← Danh sách sinh viên</a>
+            &nbsp;/&nbsp; Chi tiết
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar" th:text="${#strings.substring(student.name, 0, 1)}">N</div>
+                <div>
+                    <div class="profile-name" th:text="${student.name}">Tên Sinh Viên</div>
+                    <div class="profile-id-badge">ID: <span th:text="${student.id}">00</span></div>
+                </div>
+            </div>
+
+            <div class="info-body">
+                <div class="info-row">
+                    <div class="info-icon">📧</div>
+                    <div>
+                        <div class="info-label">Email</div>
+                        <div class="info-value" th:text="${student.email}">email@example.com</div>
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-icon">🎂</div>
+                    <div>
+                        <div class="info-label">Tuổi</div>
+                        <div class="info-value"><span th:text="${student.age}">0</span> tuổi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a th:href="@{/students}" class="btn btn-back">← Quay lại</a>
+                <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-edit">✏ Chỉnh Sửa</a>
+                <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn btn-delete"
+                   onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này không?');">🗑 Xóa</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
