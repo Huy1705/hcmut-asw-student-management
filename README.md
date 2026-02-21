@@ -95,9 +95,9 @@ Nếu `spring.jpa.hibernate.ddl-auto` đang đặt là `create`, Hibernate sẽ 
 ## 📸 Screenshots (Kết quả Lab 4 & 5)
 
 ```markdown
-![Students list](./docs/screenshots/students.png)
-![Student detail](./docs/screenshots/student-detail.png)
-![Student form](./docs/screenshots/student-form.png)
+![Students](docs/screenshots/students.png)
+![Student Detail](docs/screenshots/student-detail.png)
+![Student Form](docs/screenshots/student-form.png)
 ```
 
 
