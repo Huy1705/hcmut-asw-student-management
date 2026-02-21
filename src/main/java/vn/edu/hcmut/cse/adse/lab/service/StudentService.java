@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 
 import vn.edu.hcmut.cse.adse.lab.entity.Student;
 import vn.edu.hcmut.cse.adse.lab.repository.StudentRepository;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
@@ -34,4 +35,11 @@ public class StudentService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+    public Page<Student> getAllPaginated(Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+    public Page<Student> searchByName(String keyword, Pageable pageable) {
+        return repository.findByNameContainingIgnoreCase(keyword, pageable);
+    }
+
 }

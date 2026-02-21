@@ -102,12 +102,4 @@ Chèn ảnh minh họa vào thư mục `docs/screenshots/` rồi thêm markdown 
 ![Student form](docs/screenshots/student-form.png)
 ```
 
-Gợi ý: các template liên quan:
-- `src/main/resources/templates/students.html`
-- `src/main/resources/templates/student-detail.html`
-- `src/main/resources/templates/student-form.html`
-
----
-
-Nếu bạn muốn, tôi có thể chèn ảnh vào README ngay — hãy upload ảnh vào `docs/screenshots/` và nói tôi tên file.
 
